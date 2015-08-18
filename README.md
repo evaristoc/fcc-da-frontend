@@ -1,7 +1,4 @@
-# freecodecamp data analysis demo project
-
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.12.1.
+# Frontend Data Analysis Demo Project with FCC, Gitter
 
 ## Build & development
 
