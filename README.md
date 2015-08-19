@@ -10,4 +10,4 @@ Running `grunt test` will run the unit tests with karma.
 
 ## Server
 
-Express backend for data collection and preparation
+express.js backend for data collection and preparation
