@@ -18,4 +18,4 @@ express.js backend for data collection and preparation
 
 ## Contributors
 
-Jihdeh B. Fotowade (lead frontend), Evaristo Caraballo (project leader, backend), Stephen Ramos (backend)
+Jihdeh B. Fotowade (lead frontend), Evaristo Caraballo (project leader, frontend-backend), Stephen Ramos (backend)
