@@ -3,3 +3,5 @@
 /.tmp
 /.sass-cache
 /bower_components
+/server/node_modules
+/server/config
