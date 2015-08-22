@@ -8,6 +8,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var env = process.env.NODE_ENV || 'development';
+
+if (env === 'development') {
+  //code
+};
+
 var app = express();
 
 // view engine setup
