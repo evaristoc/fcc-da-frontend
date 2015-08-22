@@ -2,10 +2,10 @@
 
 var AppConfig = require("../config/AppConfig");
 
-var gitterHost = process.env.HOST || "https://gitter.im";
+var gitterHost = process.env.HOST || 'https://gitter.im';
 
 var _ = require("underscore");
-var request = require("request");
+var request = require('request');
 
 function handleCallback(err, res) {
     if (err) {
@@ -26,11 +26,6 @@ An object composed by:
 
 */
 var gitter = {
-    
-    path: function(roomIds){return '/api/v1/rooms/' + roomIds.HelpZiplines + '/chatMessages?limit=80000'},
-    
-    roomIds: AppConfig.roomids,
-    
     stashToken: function(token) {
         // test
         if (token) {
@@ -43,13 +38,16 @@ var gitter = {
         return (token);
     },
     
+    path: function(roomIds){return '/api/v1/rooms/' + roomIds.HelpZiplines + '/chatMessages?limit=80000'},
     
-    fetch: function(path, token) {
+    roomIds: AppConfig.roomids,
+    
+    fetch: function(path, token, opts) {
         
         token = token || AppConfig.token;
-        var opts = opts || {};
-        var url = gitterHost + path;
+        
         var options = {
+            url: gitterHost + path,
             //timeout:10000,
             //followRedirect:true,
             //maxRedirects:100,
@@ -60,31 +58,29 @@ var gitter = {
             }
         };
 
-        //opts = opts || {};
+        opts = opts || {};
         /* underscore will allow to transverse the two objects and add properties 
         if they don't exist or override the value if it does in the second object (opts)
         it is an union operation, with priority to the values at opts when duplicate attributes 
         */
-        //_.extend(options, opts); // opts takes priority
+        _.extend(options, opts); // opts takes priority
         //console.log('fetch.options\n', options)
         // trying to figure out what exacty the extra options apply to.
         // request seems to be doing the work of handling the transaction
         // it is closer to the following http://stackoverflow.com/questions/9577611/http-get-request-in-node-js-express
 
-        return request(url, options, function(err, req_res, req_body) {
+        request(options, function(err, req_res, req_body) {
             //if (err) return err;
-            //return err, req_res;
+
             if (req_res.statusCode === 200) {
-                console.log(req_body);
-                return req_body;
+                return typeof req_body;
             } else {
                 return 'err ' + req_res.statusCode;
             }
         });
     }
-
 }
 
 
 
-module.exports.gitter = gitter;
+module.exports = gitter;
