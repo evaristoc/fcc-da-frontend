@@ -4,21 +4,23 @@
 
 Initiative for a web-based dashboard to follow up the FreeCodeCamp's Gitter chatrooms activity
 
-## Frontend+Backend 
+## Frontend 
 
 ### Build & development
 
-Run `grunt` for building and if you get an error, run `grunt -f` and `grunt serve` for preview. port 9000.
+Run `grunt` for building and if you get an error, run `grunt -f` and `grunt serve` for preview at localhost, port 9000.
 
 ### Testing
 
 Running `grunt test` will run the unit tests with karma.
 
-## Server
+## Backend
 
 ### Build & development
 
-express.js backend for data collection and preparation; move to server folder (`cd <app>/server`); run `npm start` or `node bin/www` for preview; port 3000
+express.js backend for data collection and preparation; move to server folder (`cd <app>/server`); run `npm start` or `node bin/www` for preview at localhost, port 3000.
+
+
 
 ## Contributors
 
