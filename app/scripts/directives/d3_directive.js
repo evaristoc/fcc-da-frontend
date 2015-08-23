@@ -6,8 +6,6 @@ angular.module('fccDaFrontEndApp')
       link: function(scope, elem, attrs) {
         d3Service.d3().then(function(d3) {
 
-
-
           data = [{
             'bot': 0,
             'day': '2014-12-30',
@@ -546,7 +544,7 @@ angular.module('fccDaFrontEndApp')
           }, {
             'bot': 0,
             'day': '2015-06-15',
-            'hum': 1,
+            'hum': 123,
             'hum_bot': 1
           }, {
             'bot': 0,
@@ -901,8 +899,6 @@ angular.module('fccDaFrontEndApp')
             h.push(e.hum);
           });
 
-
-
           // Scale the range of the data
 
           x.domain([minDate, maxDate]).range([0, width]);
@@ -930,4 +926,4 @@ angular.module('fccDaFrontEndApp')
         });
       }
     }
-  }])
+  }]);
