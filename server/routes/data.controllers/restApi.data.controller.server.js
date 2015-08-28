@@ -1,10 +1,10 @@
 "use strict";
 var async = require('async');
-var AppConfig = require("../config/AppConfig");
+var AppConfig = require("../../config/AppConfig");
 
 var gitterHost = process.env.HOST || "https://gitter.im";
 
-var _ = require("underscore");
+//var _ = require("underscore");
 var request = require("request");
 
 function handleCallback(err, res) {
