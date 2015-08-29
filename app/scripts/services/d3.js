@@ -1,10 +1,10 @@
 angular.module('fccDaFrontEndApp')
-  .factory('d3Service', ['$document', '$q', '$rootScope', function($document, $q, $rootScope) {
+  .factory('d3Service', ['$document', '$q', '$rootScope', '$window', function($document, $q, $rootScope, $window) {
     return {
       d3: function() {
         var deffered = $q.defer();
         function onScriptLoad() {
-          $rootScope.$apply(function(){ deffered.resolve(window.d3)});
+          $rootScope.$apply(function(){ deffered.resolve($window.d3)});
         }
         var scriptTag = $document[0].createElement('script');
         scriptTag.type = 'text/javascript';

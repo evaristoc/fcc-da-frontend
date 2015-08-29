@@ -1,13 +1,27 @@
-# Frontend+Backend Data Analysis Demo Project with FCC, Gitter
+# Data Analysis Demo Project with FCC, Gitter
 
-## Build & development
+## Description
 
-Run `grunt` for building and if you get an error, run `grunt -f` and `grunt serve` for preview.
+Initiative for a web-based dashboard to follow up the FreeCodeCamp's Gitter chatrooms activity
 
-## Testing
+## Frontend 
+
+### Build & development
+
+Run `grunt` for building and if you get an error, run `grunt -f` and `grunt serve` for preview at localhost, port 9000.
+
+### Testing
 
 Running `grunt test` will run the unit tests with karma.
 
-## Server
+## Backend
 
-express.js backend for data collection and preparation
+### Build & development
+
+express.js backend for data collection and preparation; move to server folder (`cd <app>/server`); run `npm start` or `node bin/www` for preview at localhost, port 3000.
+
+
+
+## Contributors
+
+Jihdeh B. Fotowade (lead frontend), Evaristo Caraballo (project leader, frontend-backend), Stephen Ramos (backend)
