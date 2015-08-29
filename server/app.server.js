@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
------------>var routes = require('./routes/index');
+var errors = require('./components/errors');
+var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
 var users = require('./routes/users');
 
 var env = process.env.NODE_ENV || 'development';
@@ -15,9 +15,11 @@ if (env === 'development') {
 };
 
 var app = express();
+app.set('appPath', '/home/ec/Public/freecodecamp/analytics_project/fcc_da_app');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+//app.set('/', app.get('appPath'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -26,11 +28,31 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('appPath', path.normalize('../app/views'));
+//app.use(express.static(path.join(__dirname, 'public')));
+// serve all asset files from necessary directories
+//http://stackoverflow.com/questions/20396900/angularjs-routing-in-expressjs
+//app.use("/styles", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/styles'));
+//app.use("/images", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/images'));
+//app.use("/scripts", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/scripts'));
+//app.use("/views", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/views'));
+app.set("view options", {layout: false});
+app.use(express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app'));
+app.use(express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/bower_components'));
+//console.log(path.resolve(app.get('appPath') + '/index.html'))
 
------------>app.use('/', routes);
-app.use('/users', users);
+
+// Insert routes below
+//app.use('/users', users);
+//app.use('/', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
+//// All undefined asset or api routes should return a 404
+//app.route('/:url(routes|config|components|server|node_modules)/*')
+// .get(errors[404]);
+// All other routes should redirect to the index.html
+app.route('/*')
+  .get(function(req, res, next) {
+    res.sendFile(path.resolve(app.get('appPath') + '/app/index.html'));
+  });
+//app.all('/*', function(req, res, next){res.sendFile('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/index.html')})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
