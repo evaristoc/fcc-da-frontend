@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var errors = require('./components/errors');
 var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
 var users = require('./routes/users');
+var AppConfig = require('./config/AppConfig');
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -15,12 +16,15 @@ if (env === 'development') {
 };
 
 var app = express();
-app.set('appPath', '/home/ec/Public/freecodecamp/analytics_project/fcc_da_app');
+app.set('appPath', AppConfig.AppPath);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'views'));
 //app.set('/', app.get('appPath'));
-app.set('view engine', 'jade');
+//app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -36,8 +40,8 @@ app.use(cookieParser());
 //app.use("/scripts", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/scripts'));
 //app.use("/views", express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/views'));
 app.set("view options", {layout: false});
-app.use(express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app'));
-app.use(express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/bower_components'));
+app.use(express.static(path.join(app.get('appPath'),'app')));
+app.use(express.static(path.join(app.get('appPath'),'bower_components')));
 //console.log(path.resolve(app.get('appPath') + '/index.html'))
 
 
@@ -50,7 +54,7 @@ app.use(express.static('/home/ec/Public/freecodecamp/analytics_project/fcc_da_ap
 // All other routes should redirect to the index.html
 app.route('/*')
   .get(function(req, res, next) {
-    res.sendFile(path.resolve(app.get('appPath') + '/app/index.html'));
+    res.render('index');
   });
 //app.all('/*', function(req, res, next){res.sendFile('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/index.html')})
 
