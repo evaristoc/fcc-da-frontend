@@ -1,4 +1,11 @@
 angular.module('fccDaFrontEndApp')
+  //.factory('dataService', ['$resource', function($rootScope, $resource){
+  //    $resource('/data');
+  //    //return {
+  //      //data: function(){return $resource('/data',{},{method:'GET', isArray:true});}
+  //      //data: function(){return $resource('/data', {}, {method:'GET', isArray:true})}
+  //    //}
+  //  }])
   .factory('d3Service', ['$document', '$q', '$rootScope', '$window', function($document, $q, $rootScope, $window) {
     return {
       d3: function() {
