@@ -47,16 +47,16 @@ app.use(express.static(path.join(app.get('appPath'),'bower_components')));
 
 // Insert routes below
 //app.use('/users', users);
-//app.use('/', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
+app.use('/data', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
 //// All undefined asset or api routes should return a 404
 //app.route('/:url(routes|config|components|server|node_modules)/*')
 // .get(errors[404]);
 // All other routes should redirect to the index.html
-app.route('/*')
-  .get(function(req, res, next) {
-    res.render('index');
-  });
-//app.all('/*', function(req, res, next){res.sendFile('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/app/index.html')})
+//app.route('/*')
+//  .get(function(req, res, next) {
+//    res.render('index');
+//  });
+app.all('/*', function(req, res, next){res.sendFile('/home/ec/Public/freecodecamp/analytics_project/fcc_da_app/server/views/index.html')})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

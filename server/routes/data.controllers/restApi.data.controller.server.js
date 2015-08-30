@@ -82,7 +82,7 @@ var gitter = {
             if (err) throw err;
             //biancamihai
             if (req_res.statusCode === 200) {
-                cb(null, JSON.parse(req_body)[0]);
+                cb(null, JSON.stringify(JSON.parse(req_body)[0]));
             }
         });
     },
