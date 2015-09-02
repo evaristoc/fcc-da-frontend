@@ -90,28 +90,113 @@ var async = require('async');
 
 
 
+//router.get('/', function getDataPar(req, res, next){
+//  //res.json([{a:1, b:2}]);
+//      gitter.fetch(gitter.path(gitter.roomIds.HelpZiplines), gitter.token, function RenderExpress(err, result){
+//        //next();
+//        if (err) throw err;
+//        console.log('In the router for the data 1...');
+//        //res.json([{a:1, b:2}]);
+//        //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
+//        //           //,data3: gitter.multi_fetch(gitter.path, gitter.roomIds, gitter.token)
+//        //           });
+//        gitter.fetch(gitter.path(gitter.roomIds.LetsPair), gitter.token, function RenderExpress(err, result){
+//          //next();
+//          if (err) throw err;
+//          console.log('In the router for the data 2...');
+//          //res.json([{c:3, d:4}]);
+//          //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
+//          //           //,data3: gitter.multi_fetch(gitter.path, gitter.roomIds, gitter.token)
+//          //           });
+//
+//          res.json([{e:5,f:6}]);
+//        });
+//      });
+//});
+
+
+//router.get('/', function getDataPar(req, res, next){
+//  //res.json([{a:1, b:2}]);
+//      var results = {}, count = 0;
+//      gitter.fetch(gitter.path(gitter.roomIds.HelpZiplines), gitter.token, function RenderExpress(err, result){
+//        //next();
+//        if (err) throw err;
+//        console.log('In the router for the data 1...');
+//        //res.json([{a:1, b:2}]);
+//        results['ro'] = {a:1, b:2}; 
+//        if(++count == 2) { // 2 calls in this case
+//          console.log('-------------------yeiii we are done, do something here like send the date back to the client-----------------------');
+//          //console.log(results);
+//          res.json([results]);
+//        }
+//      });
+//      gitter.fetch(gitter.path(gitter.roomIds.LetsPair), gitter.token, function RenderExpress(err, result){
+//          //next();
+//        if (err) throw err;
+//        console.log('In the router for the data 2...');
+//        results['co'] = {c:3, d:4}; 
+//        if(++count == 2) { // 2 calls in this case
+//          console.log('-------------------yeiii we are done, do something here like send the date back to the client-----------------------');
+//          //console.log(results);
+//          res.json([results]);
+//        }
+//      });
+//});
+
+
+//var callback = function(){
+//  console.log("inside the callback of the parallel function");
+//}
+
+//var callback = function(err, result){
+//  if (err) throw err;
+//  console.log("inside the callback of the parallel function");
+//}
+//
+//var callback = function(result){
+//  console.log("inside the callback of the parallel function");
+//}
+
+// async: if Array[object, object] I am passing the CALLS, not the results..
+//------  the async callback function will inspect the TASK functions to find the results there!!!
+//------ the callback function that is passed is NOT the external one: it is the asyncCallback!!!!
+
 router.get('/', function getDataPar(req, res, next){
   //res.json([{a:1, b:2}]);
+  async.parallel([
+    function(callback){
       gitter.fetch(gitter.path(gitter.roomIds.HelpZiplines), gitter.token, function RenderExpress(err, result){
         //next();
         if (err) throw err;
         console.log('In the router for the data 1...');
+        callback(err, result);
+        //callback(err, result);
         //res.json([{a:1, b:2}]);
         //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
         //           //,data3: gitter.multi_fetch(gitter.path, gitter.roomIds, gitter.token)
         //           });
-        gitter.fetch(gitter.path(gitter.roomIds.LetsPair), gitter.token, function RenderExpress(err, result){
-          //next();
-          if (err) throw err;
-          console.log('In the router for the data 2...');
-          //res.json([{c:3, d:4}]);
-          //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
-          //           //,data3: gitter.multi_fetch(gitter.path, gitter.roomIds, gitter.token)
-          //           });
-
-          res.json([{e:5,f:6}]);
-        });
-      });
+      })
+    },
+    function(callback){
+      gitter.fetch(gitter.path(gitter.roomIds.LetsPair), gitter.token, function RenderExpress(err, result){
+        //next();
+        if (err) throw err;
+        console.log('In the router for the data 2...');
+        callback(err, result);
+        //callback(err, result);
+        //res.json([{c:3, d:4}]);
+        //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
+        //           //,data3: gitter.multi_fetch(gitter.path, gitter.roomIds, gitter.token)
+        //           });
+      })
+    }
+    ],
+    function asyncCallback(err, results){
+      if (err) throw err;
+      //res.json([{e:5,f:6}]);
+      res.json(results);
+    }
+  );
 });
 
 
