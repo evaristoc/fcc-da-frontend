@@ -862,9 +862,86 @@ angular.module('fccDaFrontEndApp')
           console.log('Before dataService call...');
           //http://stackoverflow.com/questions/20584367/how-to-handle-resource-service-errors-in-angularjs
           var Resource = $resource('/data',{},{isArray:true});
-          Resource.query().$promise.then(function(data) {
+          Resource.query().$promise.then(function(totaldata) {
           // success handler
+          console.log(totaldata);
+          var predata = totaldata[0];
+          console.log(typeof predata);
+          
+          var data = [];
+          var k_objects = Object.keys(predata);
+          for (var k = 0; k < k_objects.length; k++){
+            if (Object.prototype.hasOwnProperty.call(predata, k_objects[k])) {
+        //    console.log(Object.prototype.hasOwnProperty.call(result_mapred, k_objects[k]))
+        //    console.log({day:k_objects[k], hum:result_mapred[k_objects[k]].hum, bot:result_mapred[k_objects[k]].bot})
+              data.push({day:k_objects[k], hum:predata[k_objects[k]].hum, bot:predata[k_objects[k]].bot})
+            }
+          }
           console.log(data);
+          //var days = data.keys;
+          //console.log(days);
+          // Set the ranges
+          var minDate = getDate(data[0].day),
+            maxDate = getDate(data[data.length - 1].day);
+          console.log(minDate, maxDate);
+          //var x = d3.scale.linear().range([0, width]);
+          var x = d3.time.scale().range([0, width]);
+          var y = d3.scale.linear().range([height, 0]);
+          
+          // Define the axes
+          var xAxis = d3.svg.axis().scale(x)
+            .orient("bottom").ticks(5);
+          
+          var yAxis = d3.svg.axis().scale(y)
+            .orient("left").ticks(5);
+          
+          // Define the line
+          var valueline = d3.svg.line()
+            .x(function(d) {
+              return x(getDate(d.day));
+            })
+            .y(function(d) {
+              return y(d.hum);
+            });
+          
+          // Adds the svg canvas
+          var svg = d3.select(elem[0]) //select where directive was added
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+          
+          var h = [];
+          // day
+          data.forEach(function(e, i, a) {
+            d = parseDate(e.day);
+            h.push(e.hum);
+          });
+          
+          // Scale the range of the data
+          
+          x.domain([minDate, maxDate]).range([0, width]);
+          y.domain([0, d3.max(h, function(d) {
+            return d;
+          })]);
+          
+          // Add the valueline path.
+          svg.append("path")
+            .attr("class", "line")
+            .attr("d", valueline(data));
+          
+          // Add the X Axis
+          svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+          
+          // Add the Y Axis
+          svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
           }, function(error) {
           // error handler
           console.log("$resouce call got an ERROR");

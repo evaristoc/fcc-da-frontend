@@ -57,6 +57,28 @@ router.get('/', function getDataPar(req, res, next){
         return obj;
         }, {});
         
+        //console.log(result_mapred);
+        //var finalresult = [];
+        //console.log(Object.keys(result_mapred))
+        //var k_objects =  Object.keys(result_mapred);
+        //for (var k = 0; k < k_objects.length; k++){
+        //  if (Object.prototype.hasOwnProperty.call(result_mapred, k_objects[k])) {
+        //    console.log(Object.prototype.hasOwnProperty.call(result_mapred, k_objects[k]))
+        //    console.log({day:k_objects[k], hum:result_mapred[k_objects[k]].hum, bot:result_mapred[k_objects[k]].bot})
+        //    finalresult.push({day:k_objects[k], hum:result_mapred[k_objects[k]].hum, bot:result_mapred[k_objects[k]].bot})
+        //  }
+        //}
+        //
+        ////for (k in Object.keys(result_mapred)){
+        ////  //console.log(Object.prototype.hasOwnProperty.call(result_mapred, k))
+        ////  //if (Object.prototype.hasOwnProperty.call(result_mapred, k)) {
+        ////    console.log({day:k, hum:result_mapred[k].hum, bot:result_mapred[k].bot})
+        ////    finalresult.push({day:k, hum:result_mapred[k].hum, bot:result_mapred[k].bot})
+        ////  //}
+        ////}
+        //
+        //console.log(finalresult);
+        
         callback(err, result_mapred);
         //callback(err, result);
         //res.json([{a:1, b:2}]);
