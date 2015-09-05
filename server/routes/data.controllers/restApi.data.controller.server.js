@@ -82,7 +82,7 @@ var gitter = {
             if (err) throw err;
             //biancamihai
             if (req_res.statusCode === 200) {
-                cb(null, JSON.stringify(JSON.parse(req_body)[0]));
+                cb(null, JSON.parse(req_body));
             }
         });
     },
@@ -117,7 +117,8 @@ var gitter = {
                     //return ('fetch is working!');
                     console.log(JSON.parse(req_body)[0]);
                     cb(null, JSON.parse(req_body)[0]);
-                    return req_body;
+                    //cb(null, JSON.parse(req_body));
+                    //return req_body;
                 } else {
                     //return err;
                     cb(err, req_res.statusCode);

@@ -169,7 +169,49 @@ router.get('/', function getDataPar(req, res, next){
         //next();
         if (err) throw err;
         console.log('In the router for the data 1...');
-        callback(err, result);
+        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
+        //var result_mapred = {'0000-00-00':[0,0]};
+        console.log(result_map);
+        
+        var result_mapred = {};
+        ////console.log(Object.keys(result_mapred))
+        //for(var i = 0; i < result_map.length; i++){
+        //  if (!(result_map[i]['sent'] in Object.keys(result_mapred))) {
+        //    result_mapred[result_map[i]['sent']] = {hum:0,bot:0};
+        //  }
+        //  if (result_mapred.hasOwnProperty(result_map[i]['sent'])) {
+        //    ++result_mapred[result_map[i]['sent']].hum.value;
+        //    console.log(result_mapred[result_map[i]['sent']].hum);
+        //  }
+          //console.log(result_map[i]['sent'], typeof result_map[i]['sent'], Object.keys(result_mapred)[k], typeof Object.keys(result_mapred)[k], result_map[i]['sent'] == Object.keys(result_mapred)[k]);
+          //for (var k = 0; k < Object.keys(result_mapred).length; k++){
+          //  console.log(result_map[i]['sent'], typeof result_map[i]['sent'], Object.keys(result_mapred)[k], typeof Object.keys(result_mapred)[k], result_map[i]['sent'] == Object.keys(result_mapred)[k]);
+          //  if (result_map[i]['sent'] == Object.keys(result_mapred)[k]) {
+          //    if (result_map[i]['hum'] == 1) {
+          //      console.log(result_mapred[result_map[i]['sent']][0]);
+          //      result_mapred[result_map[i].sent].hum = parseInt(result_mapred[result_map[i].sent].hum) + 1;
+          //    }
+          //  
+          //      //result_mapred[result_map[i]['sent']][0] = result_mapred[result_map[i]['sent']][0] + result_map[i]['hum'];
+          //      result_mapred[result_map[i]['sent']][1] = result_mapred[result_map[i]['sent']][1] + result_map[i]['bot'];
+          //      console.log(result_mapred[result_map[i]['sent']])
+          ////    }else if (k == (Object.keys(result_mapred).length-1)){
+          ////      result_mapred[result_map[i]['sent']] = [0,0];
+          // }
+          //}
+        //}  
+          //if (!(result_map[i]['sent'] in Object.keys(result_mapred))) {
+          //  result_mapred[result_map[i]['sent']] = [0,0];
+          //console.log(result_map[i]['sent'], result_map[i]['sent'] in Object.keys(result_mapred))
+          //console.log(Object.keys(result_mapred))
+
+          //};
+        //};
+        
+        //var result_map = result;
+        //console.log(typeof result, result.length);
+        //console.log(result_mapred);
+        callback(err, result_mapred);
         //callback(err, result);
         //res.json([{a:1, b:2}]);
         //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
@@ -182,7 +224,21 @@ router.get('/', function getDataPar(req, res, next){
         //next();
         if (err) throw err;
         console.log('In the router for the data 2...');
-        callback(err, result);
+        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
+        var result_mapred = {};
+        //console.log(Object.keys(result_mapred))
+        for(var i = 0; i < result_map.length; i++){
+          if (!(result_map[i]['sent'] in Object.keys(result_mapred))) {
+            result_mapred[result_map[i]['sent']] = [0,0];
+          };
+          result_mapred[result_map[i]['sent']][0] = result_mapred[result_map[i]['sent']][0] + result_map[i]['hum'];
+          result_mapred[result_map[i]['sent']][1] = result_mapred[result_map[i]['sent']][1] + result_map[i]['bot'];
+          };
+        
+        //var result_map = result;
+        //console.log(typeof result, result.length);
+        //console.log(result_mapred);
+        callback(err, result_mapred);
         //callback(err, result);
         //res.json([{c:3, d:4}]);
         //res.render('/', {data1: gitter.path(gitter.roomIds.HelpZiplines), data2: result.id
@@ -194,6 +250,7 @@ router.get('/', function getDataPar(req, res, next){
     function asyncCallback(err, results){
       if (err) throw err;
       //res.json([{e:5,f:6}]);
+      
       res.json(results);
     }
   );

@@ -24,4 +24,4 @@ express.js backend for data collection and preparation; move to server folder (`
 
 ## Contributors
 
-Jihdeh B. Fotowade (lead frontend), Evaristo Caraballo (project leader, frontend-backend), Stephen Ramos (backend)
+Jihdeh B. Fotowade (lead frontend), Evaristo Caraballo (project leader, frontend-backend), Stephen Ramos (backend), Bianca Mihai (backend)
