@@ -3,10 +3,6 @@
 /.tmp
 /.sass-cache
 /bower_components
-<<<<<<< HEAD
 /server/node_modules
 /server/config
 /server/routes/routes_unused
-=======
-server/node_modules
->>>>>>> 972d3a7737e1c71e7921a2d391fb1bac836e2b9d
