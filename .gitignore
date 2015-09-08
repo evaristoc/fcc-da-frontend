@@ -5,5 +5,5 @@
 /bower_components
 /server/node_modules
 /server/config
-/server/public
+/server/public/bower_components
 /server/routes/routes_unused
