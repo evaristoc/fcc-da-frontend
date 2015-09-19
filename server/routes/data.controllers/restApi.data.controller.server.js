@@ -87,8 +87,6 @@ var gitter = {
         });
     },
     
-    
-    
     multi_fetch: function(path, roomIds, token){
         
         var gitter_call = function(cb){
@@ -125,10 +123,6 @@ var gitter = {
                 }
             });
         };
-        
-        //var callback = function(err, data){
-        //    console.log("here is the data ",data);
-        //};
         
         var data = [];
         var cb = function(err, d){if(err) throw err; data.push(d)};

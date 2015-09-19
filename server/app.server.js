@@ -35,24 +35,15 @@ app.use(bodyParser.urlencoded({
 app.use('/', routes);
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+//app.use(express.static(path.join(__dirname, 'public')));
 // serve all asset files from necessary directories
 //http://stackoverflow.com/questions/20396900/angularjs-routing-in-expressjs
 app.set("view options", {layout: false});
 
 
-
 // Insert routes below
 app.use('/data', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
 
-//// All undefined asset or api routes should return a 404
-//app.route('/:url(routes|config|components|server|node_modules)/*')
-// .get(errors[404]);
-// All other routes should redirect to the index.html
-//app.route('/*')
-//  .get(function(req, res, next) {
-//    res.render('index');
-//  });
 app.all('/*', function(req, res, next){res.sendFile(path.join(app.get('appPath'),'/server/views/index.html'))})
 
 
