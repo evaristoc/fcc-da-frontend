@@ -6,4 +6,5 @@
 /server/node_modules
 /server/config
 /server/npm-debug.log
+/server/public/bower_components
 /server/routes/routes_unused
