@@ -62,37 +62,37 @@ router.get('/', function getDataPar(req, res, next){
         //res.json([{a:1, b:2}]);
       })
     }
-    //,
-    //function(callback){
-    //  gitter.fetch(gitter.path(gitter.roomIds.LetsPair), gitter.token, function RenderExpress(err, result){
-    //    //next();
-    //    if (err) throw err;
-    //    console.log('In the router for the data 2...');
-    //    var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
-    //    
-    //    //thanks to abhisekp...
-    //    var result_mapred = result_map.reduce(function (obj, currObj) {
-    //      var date = currObj.sent;
-    //      if(!obj[date]) {
-    //        obj[date] = {
-    //          hum: 0,
-    //          bot: 0
-    //        };
-    //      }
-    //
-    //    obj[date].hum += currObj.hum;
-    //    obj[date].bot += currObj.bot;
-    //    return obj;
-    //    }, []);
-    //    callback(err, result_mapred);
-    //
-    //  })
-    //}
+    ,
+    function(callback){
+      gitter.fetch(gitter.path(gitter.roomIds.HelpBonfires), gitter.token, function RenderExpress(err, result){
+        //next();
+        if (err) throw err;
+        console.log('In the router for the data 2...');
+        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
+        
+        //thanks to abhisekp...
+        var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
+          var date = currObj.sent;
+          if(!obj[date]) {
+            obj[date] = {
+              hum: 0,
+              bot: 0
+            };
+          }
+    
+        obj[date].hum += currObj.hum;
+        obj[date].bot += currObj.bot;
+        return obj;
+        }, {});
+        callback(err, result_mapred);
+    
+      })
+    }
     ],
     function asyncCallback(err, results){
       if (err) throw err;
       //res.json([{e:5,f:6}]);
-      console.log(results);
+      console.log("all is correct!");
       res.json(results);
     }
   );
