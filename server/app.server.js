@@ -4,57 +4,48 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errors = require('./components/errors');
 var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
-var users = require('./routes/users');
+var routes = require('./routes/index');
 var AppConfig = require('./config/AppConfig');
+var cookieParser = require('cookie-parser');
 
 var env = process.env.NODE_ENV || 'development';
 
-if (env === 'development') {
-  //code
-};
 
 var app = express();
-app.set('appPath', AppConfig.AppPath);
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('/', app.get('appPath'));
-//app.set('view engine', 'jade');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(logger('dev'));
+app.use(bodyParser.json({}));
+
+// to support URL-encoded bodies
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+
+app.use('/', routes);
+app.use(express.static(path.join(__dirname, 'public')));
+
 //app.use(express.static(path.join(__dirname, 'public')));
 // serve all asset files from necessary directories
 //http://stackoverflow.com/questions/20396900/angularjs-routing-in-expressjs
 app.set("view options", {layout: false});
-app.use(express.static(path.join(app.get('appPath'),'app')));
-app.use(express.static(path.join(app.get('appPath'),'bower_components')));
-//console.log(path.resolve(app.get('appPath') + '/index.html'))
 
 
 // Insert routes below
-//app.use('/users', users);
 app.use('/data', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
-//// All undefined asset or api routes should return a 404
-//app.route('/:url(routes|config|components|server|node_modules)/*')
-// .get(errors[404]);
-// All other routes should redirect to the index.html
-//app.route('/*')
-//  .get(function(req, res, next) {
-//    res.render('index');
-//  });
+
 app.all('/*', function(req, res, next){res.sendFile(path.join(app.get('appPath'),'/server/views/index.html'))})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -62,8 +53,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace

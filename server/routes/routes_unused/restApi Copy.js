@@ -1,10 +1,10 @@
 "use strict";
 var async = require('async');
-var AppConfig = require("../../config/AppConfig");
+var AppConfig = require("../config/AppConfig");
 
 var gitterHost = process.env.HOST || "https://gitter.im";
 
-//var _ = require("underscore");
+var _ = require("underscore");
 var request = require("request");
 
 function handleCallback(err, res) {
@@ -47,10 +47,7 @@ var gitter = {
         return (token);
     },
     
-    //The CALLBACK THING...
-    //I am adding a REFERENCE TO cb (callback) that will be created *****LATER****
-    //I am also assigning it THE VALUES TO THE ARGUMENTS *****HERE*****!!!! (see below)
-    //I will "re-extract" the REFERENCE, but WITH THE VALUES TO THE ARGUMENTS *****LATER*****!!!
+    
     fetch: function(path, token, cb) {
         
         token = token || AppConfig.token;
@@ -78,14 +75,28 @@ var gitter = {
         // request seems to be doing the work of handling the transaction
         // it is closer to the following http://stackoverflow.com/questions/9577611/http-get-request-in-node-js-express
 
-        request(url, options, function(err, req_res, req_body) {
+        return request(url, options, function(err, req_res, req_body) {
             if (err) throw err;
             //biancamihai
             if (req_res.statusCode === 200) {
-                cb(null, JSON.parse(req_body));
+                cb(err, JSON.parse(req_body)[0]);
+                //console.log(req_body);
+                console.log("Data from example successfully downloaded!");
+                console.timeEnd("fetch function");
+                //return ('fetch is working!');
+                console.log(JSON.parse(req_body)[0]);
+                if (cb) {
+                    cb(null, JSON.parse(req_body)[0]);
+                }
+                return req_body.length;
+            } else {
+                //return err;
+                return 'err ' + req_res.statusCode;
             }
         });
     },
+    
+    
     
     multi_fetch: function(path, roomIds, token){
         
@@ -115,14 +126,17 @@ var gitter = {
                     //return ('fetch is working!');
                     console.log(JSON.parse(req_body)[0]);
                     cb(null, JSON.parse(req_body)[0]);
-                    //cb(null, JSON.parse(req_body));
-                    //return req_body;
+                    return req_body;
                 } else {
                     //return err;
                     cb(err, req_res.statusCode);
                 }
             });
         };
+        
+        //var callback = function(err, data){
+        //    console.log("here is the data ",data);
+        //};
         
         var data = [];
         var cb = function(err, d){if(err) throw err; data.push(d)};

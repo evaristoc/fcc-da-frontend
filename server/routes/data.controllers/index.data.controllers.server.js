@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//var ap = require('./restApi');
 var gitter = require('./restApi.data.controller.server').gitter;
 var async = require('async');
 ///* GET home page. */
@@ -18,7 +17,6 @@ var async = require('async');
 //  //           });
 //  })
 //});
-
 
 //router.get('/', function(req,res,next){res.render('index.html')})
 //http://stackoverflow.com/questions/7042340/node-js-error-cant-set-headers-after-they-are-sent
@@ -41,7 +39,6 @@ router.get('/', function getDataPar(req, res, next){
         console.log('In the router for the data 1...');
         var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
         //var result_mapred = {'0000-00-00':[0,0]};
-        //console.log(result_map);
         //thanks to abhisekp...
         var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
           var date = currObj.sent;
