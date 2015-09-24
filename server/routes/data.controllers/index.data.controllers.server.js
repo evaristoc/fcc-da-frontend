@@ -29,63 +29,52 @@ var async = require('async');
 //------  the async callback function will inspect the TASK functions to find the results there!!!
 //------ the callback function that is passed is NOT the external one: it is the asyncCallback!!!!
 
+var gitter_data = function(arr_rooms, cb){
+  return arr_rooms.forEach(function callingRoomData(room){
+    gitter.fetch(gitter.path(gitter.roomIds[room]), gitter.token, function RenderExpress(err, result){
+      if (err) throw err;
+      console.log('In the router for data from ', room);
+      var result_mapred = result.map(function select(elem){
+        return {
+          sent:elem.sent.slice(0,10),
+          hum: (elem.fromUser.username != 'camperbot')? 1 : 0,
+          bot: (elem.fromUser.username != 'camperbot')? 0 : 1  
+          };
+      })
+                          .reduce(function sumelem(obj, currobj){
+        var date = currobj.sent;
+        if (!obj[date]) {
+          obj[date] = {
+            hum: 0,
+            bot: 0
+          };
+        };
+        obj[date].hum += currobj.hum;
+        obj[date].bot += currobj.bot;
+        return obj;
+      }, {});
+    
+    cb(err, result_mapred);
+    
+    })
+  })
+};
+
+var gitter_testdata = function(arr_rooms, cb){
+  return arr_rooms.forEach(function callingRoomData(room){
+ 
+    cb(err, test[room]);
+
+  })
+};
+
+var arr_rooms = ["HelpZiplines", "HelpBonfires", "LetsPair"];
+
 router.get('/', function getDataPar(req, res, next){
   //res.json([{a:1, b:2}]);
-  async.parallel([
-    function(callback){
-      gitter.fetch(gitter.path(gitter.roomIds.HelpZiplines), gitter.token, function RenderExpress(err, result){
-        //next();
-        if (err) throw err;
-        console.log('In the router for the data 1...');
-        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
-        //var result_mapred = {'0000-00-00':[0,0]};
-        //thanks to abhisekp...
-        var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
-          var date = currObj.sent;
-          if(!obj[date]) {
-            obj[date] = {
-              hum: 0,
-              bot: 0
-            };
-          }
-
-        obj[date].hum += currObj.hum;
-        obj[date].bot += currObj.bot;
-        return obj;
-        }, {});
-        
-        callback(err, result_mapred);
-        //callback(err, result);
-        //res.json([{a:1, b:2}]);
-      })
-    }
+  async.parallel(
+    gitter_data(arr_rooms, cb)
     ,
-    function(callback){
-      gitter.fetch(gitter.path(gitter.roomIds.HelpBonfires), gitter.token, function RenderExpress(err, result){
-        //next();
-        if (err) throw err;
-        console.log('In the router for the data 2...');
-        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
-        
-        //thanks to abhisekp...
-        var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
-          var date = currObj.sent;
-          if(!obj[date]) {
-            obj[date] = {
-              hum: 0,
-              bot: 0
-            };
-          }
-    
-        obj[date].hum += currObj.hum;
-        obj[date].bot += currObj.bot;
-        return obj;
-        }, {});
-        callback(err, result_mapred);
-    
-      })
-    }
-    ],
     function asyncCallback(err, results){
       if (err) throw err;
       //res.json([{e:5,f:6}]);
@@ -98,3 +87,74 @@ router.get('/', function getDataPar(req, res, next){
 
 
 module.exports = router;
+
+
+//router.get('/', function getDataPar(req, res, next){
+//  //res.json([{a:1, b:2}]);
+//  async.parallel([
+//    function(callback){
+//      gitter.fetch(gitter.path(gitter.roomIds.HelpZiplines), gitter.token, function RenderExpress(err, result){
+//        //next();
+//        if (err) throw err;
+//        console.log('In the router for the data 1...');
+//        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
+//        //var result_mapred = {'0000-00-00':[0,0]};
+//        //thanks to abhisekp...
+//        var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
+//          var date = currObj.sent;
+//          if(!obj[date]) {
+//            obj[date] = {
+//              hum: 0,
+//              bot: 0
+//            };
+//          }
+//
+//        obj[date].hum += currObj.hum;
+//        obj[date].bot += currObj.bot;
+//        return obj;
+//        }, {});
+//        
+//        callback(err, result_mapred);
+//        //callback(err, result);
+//        //res.json([{a:1, b:2}]);
+//      })
+//    }
+//    ,
+//    function(callback){
+//      gitter.fetch(gitter.path(gitter.roomIds.HelpBonfires), gitter.token, function RenderExpress(err, result){
+//        //next();
+//        if (err) throw err;
+//        console.log('In the router for the data 2...');
+//        var result_map = result.map(function select(elem){return {sent:elem.sent.slice(0,10), hum: (elem.fromUser.username != 'camperbot')? 1 : 0, bot: (elem.fromUser.username != 'camperbot')? 0 : 1};})
+//        
+//        //thanks to abhisekp...
+//        var result_mapred = result_map.reduce(function sumelem(obj, currObj) {
+//          var date = currObj.sent;
+//          if(!obj[date]) {
+//            obj[date] = {
+//              hum: 0,
+//              bot: 0
+//            };
+//          }
+//    
+//        obj[date].hum += currObj.hum;
+//        obj[date].bot += currObj.bot;
+//        return obj;
+//        }, {});
+//        callback(err, result_mapred);
+//    
+//      })
+//    }
+//    ],
+//    function asyncCallback(err, results){
+//      if (err) throw err;
+//      //res.json([{e:5,f:6}]);
+//      console.log("all is correct!");
+//      res.json(results);
+//    }
+//  );
+//});
+
+
+
+//module.exports = router;

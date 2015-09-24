@@ -1,7 +1,7 @@
 "use strict";
 var async = require('async');
 var AppConfig = require("../../config/AppConfig");
-
+var test = require(xxxx);
 var gitterHost = process.env.HOST || "https://gitter.im";
 
 //var _ = require("underscore");
@@ -87,60 +87,62 @@ var gitter = {
         });
     },
     
-    multi_fetch: function(path, roomIds, token){
-        
-        var gitter_call = function(cb){
-        
-            token = token || AppConfig.token;
-            var opts = opts || {};
-            var url = gitterHost + path(roomIds.HelpZiplines);
-            var options = {
-                //timeout:10000,
-                //followRedirect:true,
-                //maxRedirects:100,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-            };
-            //console.log(url);
-            return request(url, options, function(err, req_res, req_body) {
-                //if (err) return err;
-                //return err, req_res;
-                if (req_res.statusCode === 200) {
-                    //console.log(req_body);
-                    console.log("Data from example successfully downloaded!");
-                    console.timeEnd("fetch function");
-                    //return ('fetch is working!');
-                    console.log(JSON.parse(req_body)[0]);
-                    cb(null, JSON.parse(req_body)[0]);
-                    //cb(null, JSON.parse(req_body));
-                    //return req_body;
-                } else {
-                    //return err;
-                    cb(err, req_res.statusCode);
-                }
-            });
-        };
-        
-        var data = [];
-        var cb = function(err, d){if(err) throw err; data.push(d)};
-       
-        async.parallel([
-                gitter_call(cb),
-                gitter_call(cb)
-               ],
-               function(err, data){
-                    if (!err) {
-                        console.log("here is the data ",data);
-                    }else{
-                        console.log("this is an error ", err);
-                    }
-                    
-               });
+    test: test
     
-    }
+    //multi_fetch: function(path, roomIds, token){
+    //    
+    //    var gitter_call = function(cb){
+    //    
+    //        token = token || AppConfig.token;
+    //        var opts = opts || {};
+    //        var url = gitterHost + path(roomIds.HelpZiplines);
+    //        var options = {
+    //            //timeout:10000,
+    //            //followRedirect:true,
+    //            //maxRedirects:100,
+    //            headers: {
+    //                'Content-Type': 'application/json',
+    //                'Accept': 'application/json',
+    //                'Authorization': 'Bearer ' + token
+    //            }
+    //        };
+    //        //console.log(url);
+    //        return request(url, options, function(err, req_res, req_body) {
+    //            //if (err) return err;
+    //            //return err, req_res;
+    //            if (req_res.statusCode === 200) {
+    //                //console.log(req_body);
+    //                console.log("Data from example successfully downloaded!");
+    //                console.timeEnd("fetch function");
+    //                //return ('fetch is working!');
+    //                console.log(JSON.parse(req_body)[0]);
+    //                cb(null, JSON.parse(req_body)[0]);
+    //                //cb(null, JSON.parse(req_body));
+    //                //return req_body;
+    //            } else {
+    //                //return err;
+    //                cb(err, req_res.statusCode);
+    //            }
+    //        });
+    //    };
+    //    
+    //    var data = [];
+    //    var cb = function(err, d){if(err) throw err; data.push(d)};
+    //   
+    //    async.parallel([
+    //            gitter_call(cb),
+    //            gitter_call(cb)
+    //           ],
+    //           function(err, data){
+    //                if (!err) {
+    //                    console.log("here is the data ",data);
+    //                }else{
+    //                    console.log("this is an error ", err);
+    //                }
+    //                
+    //           });
+    //
+    //}
 
 }
 
