@@ -1,7 +1,7 @@
 "use strict";
 var async = require('async');
 var AppConfig = require("../../config/AppConfig");
-var test = require(xxxx);
+//var test = require(xxxx);
 var gitterHost = process.env.HOST || "https://gitter.im";
 
 //var _ = require("underscore");
@@ -87,7 +87,7 @@ var gitter = {
         });
     },
     
-    test: test
+    //test: test
     
     //multi_fetch: function(path, roomIds, token){
     //    

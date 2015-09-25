@@ -6,12 +6,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var errors = require('./components/errors');
-var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
 var routes = require('./routes/index');
 var AppConfig = require('./config/AppConfig');
 var cookieParser = require('cookie-parser');
 
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'development1';
+if (env == 'development1') {
+  var dataRoutes = require('./routes/data.controllers/index.data.controllers.test.server');   
+// need to be set as $$set NODE_ENV=development2 at cmd; export NODE_ENV=development2 at linux
+}else if (env == 'development2'){
+  var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
+}
 
 
 var app = express();
