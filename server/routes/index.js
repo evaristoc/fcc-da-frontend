@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
 
 if (env === 'development') {
   var dataRoutes = require('./data.controllers/index.data.controllers.test.server');   
-// need to be set as $$set NODE_ENV=development2 at cmd; export NODE_ENV=development2 at linux
 } else if (env === 'production'){
   var dataRoutes = require('./data.controllers/index.data.controllers.server');
 }

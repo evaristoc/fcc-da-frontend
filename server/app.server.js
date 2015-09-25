@@ -10,7 +10,6 @@ var errors = require('./components/errors');
 var routes = require('./routes/index');
 var AppConfig = require('./config/AppConfig');
 var cookieParser = require('cookie-parser');
-
 var env = process.env.NODE_ENV || 'development';
 
 var app = express();
