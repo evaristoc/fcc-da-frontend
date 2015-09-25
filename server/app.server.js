@@ -1,3 +1,4 @@
+require('dotenv').load();
 var express = require('express');
 //https://lostechies.com/derickbailey/2014/02/20/how-i-work-around-the-require-problem-in-nodejs/
 //https://gist.github.com/branneman/8048520
@@ -10,14 +11,7 @@ var routes = require('./routes/index');
 var AppConfig = require('./config/AppConfig');
 var cookieParser = require('cookie-parser');
 
-var env = process.env.NODE_ENV || 'development1';
-if (env == 'development1') {
-  var dataRoutes = require('./routes/data.controllers/index.data.controllers.test.server');   
-// need to be set as $$set NODE_ENV=development2 at cmd; export NODE_ENV=development2 at linux
-}else if (env == 'development2'){
-  var dataRoutes = require('./routes/data.controllers/index.data.controllers.server');
-}
-
+var env = process.env.NODE_ENV || 'development';
 
 var app = express();
 
