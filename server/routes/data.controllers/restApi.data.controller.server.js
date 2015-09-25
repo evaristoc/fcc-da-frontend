@@ -10,12 +10,9 @@ var request = require("request");
 function handleCallback(err, res) {
     if (err) {
         console.error("ERROR \n");
-        // console.error(res);
     }
 }
 
-//TIMERS
-console.time("fetch function");
 
 /* Gitter API client helper :
 

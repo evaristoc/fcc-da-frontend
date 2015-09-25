@@ -46,8 +46,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set("view options", {layout: false});
 
 
-// Insert routes below
-app.use('/data', dataRoutes); // API is HERE!!!!!!!!!!!!!!!!!!!!!!
 
 app.all('/*', function(req, res, next){res.sendFile(path.join(app.get('appPath'),'/server/views/index.html'))})
 
