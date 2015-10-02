@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var gitter = require('./restApi.data.controller.server').gitter;
-var test = require('../../config/test.json');
+// var test = require('../../config/test.json');
 var async = require('async');
 
 var asyncTasks = []
