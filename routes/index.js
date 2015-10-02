@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 // var dataRoutes = require('./data.controllers/index.data.controllers.server');
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.STAGING || 'development';
 
 router.get('/', function(req, res, next) {
   res.sendFile('views/index.html', {
