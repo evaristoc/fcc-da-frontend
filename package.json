@@ -20,7 +20,12 @@
     "morgan": "~1.6.1",
     "request": "*",
     "serve-favicon": "~2.3.0",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "gulp": "^3.9.0",
+    "gulp-bower": "0.0.10",
+    "gulp-concat": "^2.6.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-rimraf": "^0.2.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
