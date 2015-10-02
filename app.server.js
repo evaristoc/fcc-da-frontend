@@ -40,7 +40,7 @@ app.set("view options", {layout: false});
 
 
 
-app.all('/*', function(req, res, next){res.sendFile(path.join(app.get('appPath'),'/server/views/index.html'))})
+app.all('/*', function(req, res, next){res.sendFile(path.join(app.get('appPath'),'/public/views/index.html'))})
 
 
 // catch 404 and forward to error handler

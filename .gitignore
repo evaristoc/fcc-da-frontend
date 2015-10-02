@@ -3,7 +3,8 @@
 /.tmp
 /.sass-cache
 /bower_components
-/server/node_modules
-/server/config
-/server/npm-debug.log
-/server/public/bower_components
+node_modules
+/public/lib
+/config
+npm-debug.log
+
