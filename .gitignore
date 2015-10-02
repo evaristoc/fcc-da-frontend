@@ -4,7 +4,7 @@
 /.sass-cache
 /bower_components
 node_modules
-/public/lib
+/public
 /config
 npm-debug.log
 
